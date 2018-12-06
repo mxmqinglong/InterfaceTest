@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.BUY_ERP_ORDER_CREATE.SCM_S00_NOTICE_Dao">
+  <resultMap id="BaseResultMap" type="com.hxsb.model.BUY_ERP_ORDER_CREATE.SCM_S00_NOTICE">
+    <id column="NOTICENAME"   property="noticename" />
+    <id column="RECKEY"   property="reckey" />
+    <id column="OPERATOR"   property="operator" />
+    <result column="TASKNAME"   property="taskname" />
+    <result column="DATANAME"   property="dataname" />
+    <result column="DATACODE"   property="datacode" />
+    <result column="BIZUNITID"   property="bizunitid" />
+    <result column="BIZAREAID"   property="bizareaid" />
+    <result column="BIZSHOPID"   property="bizshopid" />
+    <result column="DEPTID"   property="deptid" />
+    <result column="TITLE"   property="title" />
+    <result column="OPTEXP"   property="optexp" />
+    <result column="OPTDATA"   property="optdata" />
+    <result column="CREATETIME"   property="createtime" />
+    <result column="CREATOR"   property="creator" />
+    <result column="BILLID"   property="billid" />
+    <result column="BILLKEY"   property="billkey" />
+    <result column="ISAPPPUSHED"   property="isapppushed" />
+  </resultMap>
+  
+	<insert id="batchAdd" parameterType="java.util.ArrayList">
+		insert into SCM_S00_NOTICE (recKey,
+                    taskName, dataName, dataCode,
+                    bizUnitId, bizAreaId, bizShopId, deptId,
+                    title, operator, optExp, optData, noticeName,
+                    createTime, creator, billID, billKey)
+    	values
+    	<foreach collection="list" item="obj" index="index" separator=",">
+			(
+				#{obj.reckey,jdbcType=VARCHAR},
+	            #{obj.taskname,jdbcType=VARCHAR}, #{obj.dataname,jdbcType=VARCHAR}, #{obj.datacode,jdbcType=VARCHAR},
+                #{obj.bizunitid,jdbcType=DECIMAL}, #{obj.bizareaid,jdbcType=DECIMAL}, #{obj.bizshopid,jdbcType=DECIMAL}, #{obj.deptid,jdbcType=DECIMAL},
+                #{obj.title,jdbcType=VARCHAR}, #{obj.operator,jdbcType=DECIMAL},#{obj.optexp,jdbcType=VARCHAR}, #{obj.optdata,jdbcType=VARCHAR}, #{obj.noticename,jdbcType=VARCHAR},
+                #{obj.createtime},#{obj.creator,jdbcType=DECIMAL}, #{obj.billid,jdbcType=DECIMAL}, #{obj.billkey,jdbcType=OTHER}
+                )
+		</foreach>
+	</insert>
+	
+  
+  <insert id="insert" parameterType="com.hxsb.model.BUY_ERP_ORDER_CREATE.SCM_S00_NOTICE" >
+    insert into SCM_S00_NOTICE (recKey,
+                    taskName, dataName, dataCode,
+                    bizUnitId, bizAreaId, bizShopId, deptId,
+                    title, operator, optExp, optData, noticeName,
+                     createTime,creator, billID, billKey)
+    values 
+      (#{reckey,jdbcType=VARCHAR},
+            #{taskname,jdbcType=VARCHAR}, #{dataname,jdbcType=VARCHAR}, #{datacode,jdbcType=VARCHAR},
+                #{bizunitid,jdbcType=DECIMAL}, #{bizareaid,jdbcType=DECIMAL}, #{bizshopid,jdbcType=DECIMAL}, #{deptid,jdbcType=DECIMAL},
+                #{title,jdbcType=VARCHAR}, #{operator,jdbcType=DECIMAL},#{optexp,jdbcType=VARCHAR}, #{optdata,jdbcType=VARCHAR}, #{noticename,jdbcType=VARCHAR},
+                #{createtime,jdbcType=TIMESTAMP},#{creator,jdbcType=DECIMAL}, #{billid,jdbcType=DECIMAL}, #{billkey,jdbcType=OTHER})
+  </insert>
+  
+  <insert id="insert1" parameterType="com.hxsb.model.BUY_ERP_ORDER_CREATE.SCM_S00_NOTICE" >
+    insert into SCM_S00_NOTICE (recKey,
+                    taskName, dataName, dataCode,
+                    bizUnitId, bizAreaId, bizShopId, deptId,
+                    title, operator, optExp, optData, noticeName,
+                     createTime,creator, billID, billKey)
+    values 
+      (#{reckey,jdbcType=VARCHAR},
+            #{taskname,jdbcType=VARCHAR}, #{dataname,jdbcType=VARCHAR}, #{datacode,jdbcType=VARCHAR},
+                #{bizunitid,jdbcType=DECIMAL}, #{bizareaid,jdbcType=DECIMAL}, #{bizshopid,jdbcType=DECIMAL}, #{deptid,jdbcType=DECIMAL},
+                #{title,jdbcType=VARCHAR}, #{operator,jdbcType=DECIMAL},#{optexp,jdbcType=VARCHAR}, #{optdata,jdbcType=VARCHAR}, #{noticename,jdbcType=VARCHAR},
+                #{createtime,jdbcType=TIMESTAMP},#{creator,jdbcType=DECIMAL}, #{billid,jdbcType=DECIMAL}, #{billkey,jdbcType=OTHER})
+  </insert>
+</mapper>

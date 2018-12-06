@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.BUY_ERP_ORDER_CREATE.GP_Operator_Dao">
+  <resultMap id="BaseResultMap" type="com.hxsb.model.BUY_ERP_ORDER_CREATE.GP_Operator">
+  	<result column="id"   property="id" />
+    <result column="operatorId"   property="operatorId" />
+  </resultMap>
+  
+  <select id="selectByADAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
+     select (select id from GP_Operator where Staff=s.id) operatorId,id from CP_HX00_Staff s where ad_account=#{adAccount}
+  </select>
+</mapper>

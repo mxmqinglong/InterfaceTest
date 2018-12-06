@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxsb.dao.BUY_ERP_REFUND_CONFIRM.SCM_CSS_HttpSendLog_Dao" >
+  <resultMap id="BaseResultMap" type="com.hxsb.model.BUY_ERP_REFUND_CONFIRM.SCM_CSS_HttpSendLog" >
+    <result column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="BILLKEY" property="billkey" jdbcType="VARCHAR" />
+    <result column="UNIQUEINFO" property="uniqueinfo" jdbcType="VARCHAR" />
+    <result column="METHOD" property="method" jdbcType="VARCHAR" />
+    <result column="DATAJSONSTR" property="datajsonstr" jdbcType="VARCHAR" />
+    <result column="RESPONSECODE" property="responsecode" jdbcType="DECIMAL" />
+    <result column="RESPONSEMSG" property="responsemsg" jdbcType="VARCHAR" />
+    <result column="RESPONSEDATE" property="responsedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+   <insert id="insert" parameterType="com.hxsb.model.BUY_ERP_REFUND_CONFIRM.SCM_CSS_HttpSendLog" >
+      insert into SCM_CSS_HttpSendLog(id,BillKey,UNIQUEINFO,METHOD,dataJsonStr,responseCode,responsemsg,responsedate) 
+      values (SEQ_CSS_MASTER.NEXTVAL, #{billkey,jdbcType=VARCHAR}, #{unique,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, #{datajsonstr,jdbcType=VARCHAR}, #{responsecode,jdbcType=DECIMAL}, #{msg,jdbcType=VARCHAR},#{responsedate})
+  </insert>
+  
+  <select id="selectMaxId" resultType="java.lang.Long"  >
+		select max(id) from SCM_CSS_HTTPSENDLOG
+  </select>
+</mapper>

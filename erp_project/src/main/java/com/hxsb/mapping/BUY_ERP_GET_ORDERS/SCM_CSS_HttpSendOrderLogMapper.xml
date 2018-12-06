@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxsb.dao.BUY_ERP_GET_ORDERS.SCM_CSS_HttpSendOrderLog_Dao" >
+  <resultMap id="BaseResultMap" type="com.hxsb.model.BUY_ERP_GET_ORDERS.SCM_CSS_HttpSendOrderLog" >
+    <result column="BILLID" property="billid" jdbcType="DECIMAL" />
+    <result column="METHODS" property="methods" jdbcType="VARCHAR" />
+    <result column="LOGDATE" property="logdate" jdbcType="TIMESTAMP" />
+    <result column="ISPUSHENTEREXIT" property="ispushenterexit" jdbcType="DECIMAL" />
+  </resultMap>
+  <insert id="insert" parameterType="com.hxsb.model.BUY_ERP_GET_ORDERS.SCM_CSS_HttpSendOrderLog" >
+    insert into SCM_CSS_HTTPSENDORDERLOG (BILLID, METHODS, 
+      ISPUSHENTEREXIT,LOGDATE)
+    values (#{billid,jdbcType=DECIMAL}, #{methods,jdbcType=VARCHAR}, #{ispushenterexit,jdbcType=DECIMAL}, 
+      #{logdate})
+  </insert>
+  
+	<!-- 批量插入记录 -->
+	<insert id="batchAdd" parameterType="java.util.ArrayList">
+		insert into SCM_CSS_HTTPSENDORDERLOG (BillID,METHODS,
+		ISPUSHENTEREXIT,LOGDATE)
+    	values
+    	<foreach collection="list" item="obj" index="index" separator=",">
+			(
+				#{obj.billid}, #{obj.methods}, #{obj.ispushenterexit}, #{obj.logdate}
+			)
+		</foreach>
+	</insert>
+</mapper>

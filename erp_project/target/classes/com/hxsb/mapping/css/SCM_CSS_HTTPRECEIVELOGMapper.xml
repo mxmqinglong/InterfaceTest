@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxsb.dao.css.SCM_CSS_HTTPRECEIVELOG_Dao" >
+  <resultMap id="BaseResultMap" type="com.hxsb.model.css.SCM_CSS_HTTPRECEIVELOG" >
+    <result column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="MODULE" property="module" jdbcType="VARCHAR" />
+    <result column="METHOD" property="method" jdbcType="VARCHAR" />
+    <result column="DATAJSONSTR" property="datajsonstr" jdbcType="VARCHAR" />
+    <result column="RESPONSECODE" property="responsecode" jdbcType="DECIMAL" />
+    <result column="RESPONSEMSG" property="responsemsg" jdbcType="VARCHAR" />
+    <result column="RESPONSEDATE" property="responsedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.hxsb.model.css.SCM_CSS_HTTPRECEIVELOG" >
+    insert into SCM_CSS_HTTPRECEIVELOG (ID,MODULE,METHOD,DATAJSONSTR,RESPONSECODE,RESPONSEMSG,RESPONSEDATE)
+    values (SEQ_CSS_MASTER.NEXTVAL, #{module}, #{method}, 
+      #{datajsonstr},#{responsecode},#{responsemsg},#{responsedate})
+  </insert>
+  <select id="selectMaxId" resultType="java.lang.Long"  >
+		select max(id) from SCM_CSS_HTTPRECEIVELOG
+  </select>
+</mapper>

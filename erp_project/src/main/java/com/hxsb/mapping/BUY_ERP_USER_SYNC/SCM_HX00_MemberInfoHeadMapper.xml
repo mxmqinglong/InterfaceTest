@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.BUY_ERP_USER_SYNC.SCM_HX00_MemberInfoHead_Dao">
+  <resultMap id="BaseResultMap" type="com.hxsb.model.BUY_ERP_USER_SYNC.SCM_HX00_MemberInfoHead">
+    <result column="BILLID"  property="billid" />
+    <result column="BILLTYPE"  property="billtype" />
+    <result column="SEQUENCE"  property="sequence" />
+    <result column="MONTH"  property="month" />
+    <result column="NO"   property="no" />
+    <result column="BILLDATE"   property="billdate" />
+    <result column="STATUS"   property="status" />
+    <result column="MAKER"   property="maker" />
+    <result column="CORPID"   property="corpid" />
+    <result column="ISAPP"   property="isapp" />
+    <result column="CHECKER"   property="checker" />
+    <result column="MAKEDATE"   property="makedate" />
+    <result column="MENDER"   property="mender" />
+    <result column="CHECKDATETIME"   property="checkdatetime" />
+    <result column="EDITDATE"   property="editdate" />
+    <result column="BILLDESCR"   property="billdescr" />
+    <result column="BIZ_AREA"   property="bizArea" />
+    <result column="BUY_USER_ID"   property="buyUserId" />
+    <result column="USER_NAME"   property="userName" />
+    <result column="USER_MOBILE"   property="userMobile" />
+    <result column="BEIZHU"   property="beizhu" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMap1" type="com.hxsb.model.BUY_ERP_USER_SYNC.MemberInfo">
+    <result column="user_name"  property="userName" />
+    <result column="user_mobile"  property="userMobile" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMap2" type="com.hxsb.model.BUY_ERP_USER_SYNC.Relation">
+    <result column="relateNos"  property="relateNos" />
+    <result column="relateIDs"  property="relateIDs" />
+    <result column="Biz_Area"  property="Biz_Area" />
+    <result column="Biz_Unit"  property="Biz_Unit" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMap3" type="com.hxsb.model.BUY_ERP_USER_SYNC.Notice">
+    <result column="Biz_Unit"  property="Biz_Unit" />
+    <result column="Biz_Area"  property="Biz_Area" />
+    <result column="Title"  property="Title" />
+    <result column="OperatorID"  property="OperatorID" />
+    <result column="Creator"  property="Creator" />
+  </resultMap>
+  
+  
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  	 select * from SCM_HX00_MemberInfoHead 
+		where buy_user_id=#{buy_user_id} and status>0
+  </select> 
+  
+  
+  <select id="selectMaxNo" resultType="java.lang.String" >
+  	 select max(NO) from SCM_HX00_MemberInfoHead
+  </select> 
+  
+  <select id="selectMaxBillId" resultType="java.lang.Long" >
+  	 select max(BillID) from SCM_HX00_MemberInfoHead
+  </select>
+  
+  
+<insert id="insert" parameterType="com.hxsb.model.BUY_ERP_USER_SYNC.SCM_HX00_MemberInfoHead" >
+    insert into SCM_HX00_MemberInfoHead (BUY_USER_ID, USER_NAME, USER_MOBILE,Maker,BillDate,MakeDate,Biz_Area,Status,BillID,No)
+    values (#{buyUserId,jdbcType=DECIMAL}, #{userName,jdbcType=VARCHAR}, #{userMobile,jdbcType=VARCHAR}, #{maker,jdbcType=DECIMAL},#{billdate},#{makedate},#{bizArea,jdbcType=DECIMAL},#{status,jdbcType=DECIMAL},SEQ_CSS_MASTER.NEXTVAL,#{no,jdbcType=VARCHAR}
+	)
+  </insert>
+  
+  
+  <!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateBySelective" parameterType="Object">
+		update SCM_HX00_MemberInfoHead set
+		<trim suffixOverrides=",">
+			<if test="buyUserId != null  and buyUserId != ''">
+				BUY_USER_ID=#{buyUserId},
+			</if>
+			<if test="userName != null  and userName != ''">
+				USER_NAME=#{userName},
+			</if>
+			<if test="userMobile != null  and userMobile != ''">
+				USER_MOBILE=#{userMobile},
+			</if>
+			<if test="maker != null  and maker != ''">
+				MAKER=#{maker},
+			</if>
+			<if test="editdate != null  and editdate != ''">
+				EDITDATE=#{editdate},
+			</if>
+		</trim>
+		where BILLID=#{billid}
+	</update>
+  
+  <select id="selectByUserMobile" resultMap="BaseResultMap1"  parameterType="java.lang.String" >
+  	 select user_name,user_mobile from SCM_HX00_MemberInfoHead where Status in (30) and user_mobile=#{userMobile}
+  </select>
+  
+  
+  <!-- 变更单  -->
+  <select id="selectRelations" resultMap="BaseResultMap2"  parameterType="java.lang.String" >
+  	 select nvl(strcatdistinct(no),'') relateNos,nvl(strcatdistinct(h.billid),'-1') relateIDs,Biz_Unit,Biz_Area from SCM_HX03_ROHead h left join SCM_HX03_ROContactNew d on h.billid=d.billid
+                      where (AuthoritySigned||AuthoritySigned_info=#{searchStr} or Contact||Contact_Info=#{searchStr} or
+                      ChargeSignBy||ChargeSignBy_Info=#{searchStr} or ReturnSignBy||ReturnSignBy_Info=#{searchStr} or 
+                      Recognizor||Recognizor_Info=#{searchStr} or ContactName||ContactMobile=#{searchStr}) and status>0 
+                      and ChkChange=0 group by Biz_Unit,Biz_Area
+  </select>
+  
+  
+  <select id="selectNotice" resultMap="BaseResultMap3"  parameterType="java.lang.Long" >
+  	 SELECT '授权人信息变更单'||h.NO||' 待确认' AS Title,
+                           h.Maker as Creator,o.OptID as OperatorID,
+                           H.BillID, h.No, h.Biz_Unit, h.Biz_Area
+                    FROM SCM_HX00_AuthoryChangeHead H 
+                    left join  GP_Roles r on r.Biz_Unit_ID=H.Biz_Unit left join GP_OptRole o on r.id=o.roleId 
+                    where r.name like '%总运营%'
+                   and h.status=10 and billid=#{billid}
+  </select>
+  
+  
+  <!-- 根据手机号更新会员绑定状态   -->
+	<update id="updateByMobile" parameterType="java.lang.String">
+		update SCM_HX00_MemberInfoHead set ISBIND=1  where USER_MOBILE=#{userMobile}
+	</update>
+</mapper>

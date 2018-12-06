@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.css.S_AutoNumber_Dao">
+  <resultMap id="BaseResultMap" type="com.hxsb.model.css.S_AutoNumber">
+    <result column="NAME"  property="name" />
+    <result column="NUMBERVALUE"  property="numbervalue" />
+    <result column="ENDNUMBER"  property="endnumber" />
+    <result column="WARNNUMBER"  property="warnnumber" />
+  </resultMap>
+  
+  <select id="selectNumber" resultMap="BaseResultMap" parameterType="java.lang.String" >
+		SELECT NumberValue, EndNumber 
+					FROM S_AutoNumber WHERE Name = #{strObjName} 
+  </select>
+  
+  <!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateBySelective" parameterType="java.util.Map">
+		UPDATE S_AutoNumber SET 
+							NumberValue = (NumberValue + #{lngNumber}
+							) 
+							 WHERE Name = #{strObjName}
+	</update>
+</mapper>

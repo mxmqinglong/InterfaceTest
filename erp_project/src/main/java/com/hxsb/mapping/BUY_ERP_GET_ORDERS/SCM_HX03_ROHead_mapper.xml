@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.BUY_ERP_GET_ORDERS.SCM_HX03_ROHead_Dao">
+  <resultMap id="BaseResultMap" type="com.hxsb.model.BUY_ERP_GET_ORDERS.OrderRecord">
+  	<result column="BillID" property="erp_order_id"/>
+	<result column="no"  property="erp_order_number" />
+	<result column="project"  property="project_name" />
+	<result column="contractorName"  property="signatory" />
+	<result column="order_status"  property="order_status" />
+	
+	<result column="makeDate"  property="create_time" />
+	<result column="PayDays"  property="payment_time_limit" />
+	<result column="payMent"  property="payment_way" />
+	<result column="amount"  property="contract_amount" />
+	<result column="payableDeposit"  property="cash_pledge_amount" />
+	
+	<result column="payablePrepayment"  property="advance_payment_amount" />
+	<result column="projectAddrName"  property="city" />
+	<result column="deliveryTransferType"  property="enter_arena_logistics" />
+	<result column="returnTransferType"  property="out_arena_logistics" />
+	<result column="logistics_cost"  property="logistics_cost" />
+	
+	
+	<result column="staffName"  property="erp_salesman_number" />
+	<result column="unitName"  property="erp_department_name" />
+	<result column="shopName"  property="erp_shop_name" />
+	
+	
+	<!-- 订单明细   -->
+	<collection property="details" ofType="com.hxsb.model.BUY_ERP_GET_ORDERS.OrderRecordDetail">
+        <!-- <result column="d_billid" property="billid" /> -->
+        <result column="product_erp_number"  property="product_erp_number" />
+		<result column="itemDescr"  property="name" />
+		<result column="itemQty"  property="quantity" />
+		<result column="Price"  property="lease_price" />
+		<result column="leaseTerm"  property="tenancy" />
+		
+		<result column="leaseUnit"  property="tenancy_unit" />
+		<result column="ModelCode"  property="model" />
+		<result column="deliveryDate"  property="predict_enter_arena_time" />
+		<result column="rules"  property="additional_provisions" />
+		
+		<!-- <result column="d_rn"  property="rownum" /> -->
+      </collection>
+	
+	<!--  联系人明细   -->
+	<!-- <collection property="contacts" column="BillID" javaType="ArrayList" 
+                ofType="com.hxsb.model.BUY_ERP_GET_ORDERS.Contact"> -->
+	<collection property="contacts" ofType="com.hxsb.model.BUY_ERP_GET_ORDERS.Contact">
+        <!-- <result column="c_BILLID" property="BillID"/> -->
+        <result column="c_contactType"  property="contact_role" />
+		<result column="c_ContactName"  property="name" />
+		<result column="IDCard"  property="id_card_number" />
+		<result column="c_ContactMobile"  property="mobile_number" />
+		
+		<!-- <result column="c_rn"  property="rownum" /> -->
+      </collection>
+      
+      <!-- 变更日志  -->
+	<collection property="change_logs" ofType="com.hxsb.model.BUY_ERP_GET_ORDERS.ChangeLog">
+        <!-- <result column="l_Master_RO_ID" property="BillID"/> -->
+        <result column="ch_RO_No"  property="erp_change_number" />
+		<result column="ch_Notes"  property="change_description" />
+      </collection>
+	
+     
+     <!-- 变更日志  -->
+	<!-- <collection property="change_logs" ofType="com.hxsb.model.BUY_ERP_GET_ORDERS.ChangeLog">
+        <id column="d_Master_RO_ID" property="BillID3"/>
+        <result column="ch_RO_ID"  property="erp_change_number" />
+		<result column="ch_Notes"  property="change_description" />
+      </collection> -->
+      
+      <!--  联系人明细   -->
+	<!-- <collection property="contacts" ofType="com.hxsb.model.BUY_ERP_GET_ORDERS.Contact">
+        <id column="BillID1" property="BillID"/>
+        <result column="contactType"  property="contact_role" />
+		<result column="ContactName"  property="name" />
+		<result column="IDCard"  property="id_card_number" />
+		<result column="ContactMobile"  property="mobile_number" />
+      </collection> -->
+	
+	
+      
+      
+  </resultMap>
+  
+  <resultMap id="BaseResultMap1" type="com.hxsb.model.BUY_ERP_GET_ORDERS.OrderRecordDetail">
+	
+	<result column="BillDtlID"  property="product_erp_number" />
+	<result column="itemDescr"  property="name" />
+	<result column="itemQty"  property="quantity" />
+	<result column="Price"  property="lease_price" />
+	<result column="leaseTerm"  property="tenancy" />
+	
+	<result column="leaseUnit"  property="tenancy_unit" />
+	<result column="itemID"  property="model" />
+	<result column="deliveryDate"  property="predict_enter_arena_time" />
+	<result column="rules"  property="additional_provisions" />
+	
+  </resultMap>
+  
+  <resultMap id="BaseResultMap2" type="com.hxsb.model.BUY_ERP_GET_ORDERS.ChangeLog">
+	<result column="ch_RO_No"  property="erp_change_number" />
+	<result column="ch_Notes"  property="change_description" />
+	
+  </resultMap>
+  
+  <resultMap id="BaseResultMap3" type="com.hxsb.model.BUY_ERP_GET_ORDERS.Contact">
+	<result column="contactType"  property="contact_role" />
+	<result column="ContactName"  property="name" />
+	<result column="IDCard"  property="id_card_number" />
+	<result column="ContactMobile"  property="mobile_number" />
+  </resultMap>
+  
+  
+  <resultMap id="BaseResultMap4" type="com.hxsb.model.BUY_ERP_GET_DELIVERY_CREATE.ReceiptRecord">
+    <result column="billid" property="erp_delivery_id"/>
+    <result column="equ_RO_ID"  property="erp_order_id" />
+    <result column="no"  property="erp_delivery_number" />
+    <result column="delivery_type"  property="delivery_type" />
+    <result column="DeliveryMan"  property="delivery_man_name" />
+    
+    <!-- 订单明细   -->
+    <collection property="details" ofType="com.hxsb.model.BUY_ERP_GET_DELIVERY_CREATE.ReceiptRecordDetail">
+        <result column="product_erp_number" property="product_erp_number" />
+        <result column="equ_EquCode"  property="facility_erp_number" />
+        <result column="equ_MachineCode"  property="machine_number" />
+        <result column="name" property="name" />
+        <result column="model"  property="model" />
+        <result column="equ_StartRentDate"  property="time" />
+       
+      </collection>
+  </resultMap>
+  
+  
+  
+  <resultMap id="BaseResultMap5" type="com.hxsb.model.BUY_ERP_GET_DELIVERY_CREATE.ReceiptRecord">
+    <result column="billid" property="erp_delivery_id"/>
+    <result column="equ_RO_ID"  property="erp_order_id" />
+    <result column="no"  property="erp_delivery_number" />
+    <result column="delivery_type"  property="delivery_type" />
+    <result column="ExitDeliveryMan"  property="delivery_man_name" />
+    
+    <!-- 订单明细   -->
+    <collection property="details" ofType="com.hxsb.model.BUY_ERP_GET_DELIVERY_CREATE.ReceiptRecordDetail">
+        <result column="product_erp_number" property="product_erp_number" />
+        <result column="equ_EquCode"  property="facility_erp_number" />
+        <result column="equ_MachineCode"  property="machine_number" />
+        <result column="name" property="name" />
+        <result column="model"  property="model" />
+        <result column="equ_ExitDate"  property="time" />
+       
+      </collection>
+  </resultMap>
+  
+  
+
+  
+  <select id="selectData" resultMap="BaseResultMap" parameterType="java.util.Map" >
+			select h.*,
+b.d_BillID,b.d_rn,b.d_BillDtlID,b.itemDescr,b.itemQty,b.product_erp_number,b.Price,b.leaseTerm,
+			  b.leaseUnit,b.itemID,b.deliveryDate,b.rules,b.ModelCode,
+			  c.c_BILLID,c.c_rn,c.c_contactType,c.c_ContactName,c.IDCard,c.c_ContactMobile,
+			  d.l_Master_RO_ID,d.ch_RO_ID,d.ch_RO_No,d.ch_Notes	
+from  (select * from (select distinct row_number() over(order by a.BillID) as rowno, a.MASTER_RO_ID, a.BILLID, a.NO, a.MAKEDATE, a.ORDER_STATUS, a.PROJECT, a.PAYDAYS,
+			 a.PAYMENT, a.AMOUNT, a.PAYABLEDEPOSIT, a.PAYABLEPREPAYMENT, a.PROJECTADDRNAME, 
+			 a.DELIVERYTRANSFERTYPE, a.RETURNTRANSFERTYPE, a.STAFFNAME,
+			  a.CONTRACTORNAME, 
+			  a.logistics_cost,a.unitName,a.shopName from VIEW_CSS_Order_Record a 
+where  a.ContactName =#{name} 
+			and a.ContactMobile =#{mobile})
+where  rowno <![CDATA[ <= ]]> #{pageindex} * #{pagesize} and rowno <![CDATA[ > ]]> ( #{pageindex} -1)*#{pagesize} ) h 
+left join VIEW_CSS_Order_Record_Detail b on  h.BillID=b.d_BillID
+			left join VIEW_CSS_Order_Contact c on  h.BillID=c.c_BILLID
+			left join VIEW_CSS_Order_ChangeLog d on  h.BillID=d.l_Master_RO_ID
+  </select>
+  
+  
+  <select id="selectTotalAmout" resultType="java.lang.Integer" parameterType="java.util.Map" >
+			select count(*)
+from  VIEW_CSS_Order_Record a
+where a.ContactName like '%'||#{name}||'%' 
+			and a.ContactMobile like '%'||#{mobile}||'%' 
+  </select>
+
+  
+  <select id="selectByNameAndMobile" resultMap="BaseResultMap" parameterType="java.util.Map" >
+  <!-- select project from SCM_HX03_ROHead h 
+          left join SCM_HX03_ROContactNew d on h.billid=d.billid 
+          where h.status>=20 and SrcRO_ID=-1 and ChkChange=0 and Biz_Unit in (105001,105002) and ContactName like CONCAT('%',#{ContactName}) and ContactMobile like CONCAT('%',#{ContactMobile}) -->
+  select distinct Master_RO_ID,h.BillID, no as TITLE,TO_CHAR(h.makeDate, 'YYYY-MM-DD HH24:MI:SS') as makeDate,  
+		            DECODE(h.status,20,'001',29,'001',30,'002',50,'002',90,'003',100,'003','004') order_status,project,  
+		           h.status,payDays,DECODE(payMent,1,'周期结算',2,'仅第一期预付,后续按周期结算并支付',3,'预付结算','') payMent,  
+		          amount,payableDeposit,payablePrepayment,(select FullName from CP_HX00_AdminDivision a where a.id=h.ProjectAddrID) projectAddrName,   
+		           DECODE(DeliveryTransferType,10,'出租方',20,'承租方','') deliveryTransferType,   
+		           DECODE(ReturnTransferType,10,'出租方',20,'承租方','') returnTransferType,   
+		           (select ad_account from CP_HX00_Staff where id=h.staffID) staffName,SrcRO_NO,ChangeContent,  
+		           (select Name from CP_HX02_Customer where id=h.Contractor) contractorName,   
+		            (select sum(real_amount) from SCM_HX03_RO_Charge where billid=h.BillID) logistics_cost   
+		           from SCM_HX03_ROHead h   
+		           left join SCM_HX03_ROContactNew d on h.billid=d.billid   
+		           where h.status>=20 and SrcRO_ID=-1 and ChkChange=0 and Biz_Unit in (105001,105002) and ContactName like CONCAT('%',#{ContactName}) and ContactMobile like CONCAT('%',#{ContactMobile})
+  </select>
+  
+  
+  <select id="selectDetailByBillID" resultMap="BaseResultMap1" parameterType="java.lang.String" >
+  	 SELECT rownum,BillDtlID,to_char(dtl_ItemID) itemID,dtl_StdPrice_DtlID stdPrice_DtlID,dtl_CreditPrice creditPrice,   
+	             dtl_CreditPrice_DtlID creditPrice,dtl_ItemUOM itemUOM,m.name UOMName,dtl_ItemType itemType,   
+	             dtl_ItemDescr itemDescr,DECODE(dtl_LeaseUnit,10,'月',20,'周',30,'日',40,'台班',50,'季',60,'年',70,'平方',80,'立方','') leaseUnit,dtl_PriceMode priceMode,dtl_MinLease minLease,   
+	             TO_CHAR(dtl_DeliveryDate, 'YYYY-MM-DD HH24:MI:SS') deliveryDate,dtl_ItemQty itemQty,dtl_StdPrice stdPrice,   
+	             dtl_Price Price,dtl_DirectPriceUnit directPriceUnit,dtl_StdPriceUnit stdPriceUnit,dtl_PriceUnit rentPriceUnit,dtl_Discount discount,   
+	             dtl_StepPriceDescr stepPriceDescr,dtl_stepPriceData stepPriceData,dtl_Rules rules,Dtl_DIscountAmount,   
+	             dtl_Rules rules,dtl_SettleModel settleModel,dtl_Price rentPrice,dtl_leaseTerm leaseTerm,   
+	             dtl_MinRentAmount minRentAmount,SrcDtlID   
+	               FROM SCM_HX03_RO_Dtl a   
+	               left join CP_HX00_MeasureUnit m on m.id=a.dtl_ItemUOM   
+	              WHERE a.BillID=#{billNo}  
+  </select>
+  
+  
+  <select id="selectChangeLogsByBillID" resultMap="BaseResultMap2" parameterType="java.lang.String" >
+     SELECT  BillID AS ch_RO_ID, nvl(No,'') AS ch_RO_No, RO_Version AS ch_RO_Version, 
+             EffectiveDate AS ch_EffectiveDate, Project AS ch_Project, Lessee AS ch_Lessee, 
+             Contractor AS ch_Contractor, Notes AS ch_Notes, Status AS ch_Status FROM SCM_HX03_ROHead 
+             WHERE Status>0 AND ChkChange=1 AND Master_RO_ID=#{billNo}
+  </select>
+  
+  
+  <select id="selectContactsByBillID" resultMap="BaseResultMap3" parameterType="java.lang.String" >
+  	 SELECT rownum,BillDtlID,ContactName,ContactMobile,IDCard,
+              DECODE(REGEXP_SUBSTR(nvl(contactType, 0), '[^;]+', 1, c.CALLEVEL, 'i'),1,'001',3,'002',2,'003',4,'004','005') contactType
+              FROM SCM_HX03_ROContactNew a, WF_CALLEVEL c
+              where  c.CALLEVEL <![CDATA[ <= ]]> (LENGTH(nvl(contactType, 0))-LENGTH(REGEXP_REPLACE(nvl(contactType, 0), ';', '')) + 1)
+              and a.BillID=#{billNo}
+  </select> 
+  
+  
+  <!-- <select id="selectDataByBillID0" resultMap="BaseResultMap4" parameterType="java.lang.String" >
+       select b.billdtlid,b.equ_EquID,b.equ_MachineCode,b.equ_RealEquNO,equ_EquModel,
+       b.product_erp_number,b.name,b.model,b.equ_EquCode,b.equ_ExitDate,
+       c.billid,(select billid from SCM_HX03_ROHead where no=RO_NO) roId,no,'002' delivery_type,
+		(select Name from CP_HX00_Staff where id=ExitDeliveryMan) ExitDeliveryMan from hxbiz_init."VIEW_CSS_Start_DELIVERY" a
+		left join hxbiz_init."VIEW_CSS_Start_DELIVERY_Detail" b on  a.BILLID=b.BILLID
+		left join SCM_HX09_EquExitJoinHead c on a.BILLID=c.BILLID
+		where a.id=#{billid}
+  </select> -->
+  <select id="selectDataByBillID0" resultMap="BaseResultMap4" >
+       select  a.equ_RO_ID,b.billdtlid,b.equ_EquID,b.equ_MachineCode,b.equ_EquCode,b.equ_EquModuel,
+                    b.product_erp_number,b.name,b.model,b.equ_StartRentDate,
+                    c.billid,(select billid from SCM_HX03_ROHead where no=RO_NO) roId,no,'001' delivery_type,
+                        (select Name from CP_HX00_Staff where id=DeliveryMan) DeliveryMan
+from VIEW_CSS_Start_DELIVERY a
+		left join VIEW_CSS_Start_DELIVERY_Detail b on  a.BILLID=b.BILLID
+		left join SCM_HX09_EquEntryJoinHead c on a.BILLID=c.BILLID
+		where a.id in (
+        <foreach collection="list" item="obj" index="index" separator=",">
+            #{obj}
+       </foreach>
+		)
+  </select>
+  
+  
+  
+  <!-- <select id="selectDataByBillID1" resultMap="BaseResultMap5" >
+       select b.billdtlid,b.equ_EquID,b.equ_MachineCode,b.equ_RealEquNO,equ_EquModel,
+       b.product_erp_number,b.name,b.model,b.equ_EquCode,b.equ_ExitDate,
+       c.billid,(select billid from SCM_HX03_ROHead where no=RO_NO) roId,no,'002' delivery_type,
+		(select Name from CP_HX00_Staff where id=ExitDeliveryMan) ExitDeliveryMan from hxbiz_init."VIEW_CSS_Start_DELIVERY" a
+		left join hxbiz_init."VIEW_CSS_Start_DELIVERY_Detail" b on  a.BILLID=b.BILLID
+		left join SCM_HX09_EquExitJoinHead c on a.BILLID=c.BILLID
+		where a.id=#{billid}
+  </select> -->
+  <select id="selectDataByBillID1" resultMap="BaseResultMap5" >
+       select a.equ_RO_ID,b.billdtlid,b.equ_EquID,b.equ_MachineCode,b.equ_RealEquNO,
+                                b.equ_EquModel,b.product_erp_number,b.name,b.model,b.equ_EquCode,b.equ_ExitDate,
+	c.billid,(select billid from SCM_HX03_ROHead where no=RO_NO) roId,no,'002' delivery_type,
+                                       (select Name from CP_HX00_Staff where id=ExitDeliveryMan) ExitDeliveryMan
+from VIEW_CSS_End_DELIVERY a
+		left join VIEW_CSS_End_DELIVERY_Detail b on  a.BILLID=b.BILLID
+		left join SCM_HX09_EquExitJoinHead c on a.BILLID=c.BILLID
+		where a.id in (
+        <foreach collection="list" item="obj" index="index" separator=",">
+            #{obj}
+       </foreach>
+		)
+  </select>
+
+</mapper>

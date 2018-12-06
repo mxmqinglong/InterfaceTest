@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.BUY_ERP_GET_PAYMENT_RECORD.SCM_HX07_Receive_CAVHead_Dao">
+  <resultMap id="BaseResultMap" type="com.hxsb.model.BUY_ERP_GET_PAYMENT_RECORD.PaymentRecord">
+    <result column="BillID"  property="erp_payment_record_id" />
+    <result column="No"  property="erp_payment_record_number" />
+    <result column="SerialNo"  property="name" /><!-- ？？ -->
+    <result column="PayWay"  property="pay_type" />
+    <result column="ReceiveDate"  property="time" />
+    <result column="ReceiveAccount"  property="ReceiveAccount" />
+    <result column="SerialNo"  property="SerialNo" />
+    <result column="ReceiveAmount"  property="total_amount" />
+    <result column="ReceivePayer"  property="payer" />
+    
+    <!-- 记录明细   -->
+	<collection property="details" ofType="com.hxsb.model.BUY_ERP_GET_PAYMENT_RECORD.PaymentRecordDetail">
+       	<result column="dtl_CAV_Amount" property="amount" />
+       	<result column="dtl_ROID"  property="erp_order_id" />
+	    <result column="BillDtlID"  property="erp_payment_record_details_id" />
+     </collection>
+  </resultMap>
+  
+  <resultMap id="BaseResultMap1" type="com.hxsb.model.BUY_ERP_GET_PAYMENT_RECORD.SCM_HX07_Receive_CAVHead">
+    <result column="billid"  property="billid" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMap2" type="com.hxsb.model.BUY_ERP_GET_PAYMENT_RECORD.PaymentRecord2">
+    <result column="SerialNo"  property="payment_serial_number" />
+    <result column="ReceiveAmount"  property="topup_amount" />
+    <result column="MemberID"  property="buy_user_id" />
+    <result column="MemberName"  property="user_name" />
+    <result column="MemberTel"  property="user_mobile" />
+    <result column="PayTime"  property="pay_time" />
+    <result column="PayWay"  property="pay_way" />
+  </resultMap>
+  
+  <select id="selectData" resultMap="BaseResultMap">
+  	select distinct h.BillID,h.No,h.SerialNo,h.PayWay,h.ReceiveDate,h.ReceiveAccount,h.SerialNo,d.dtl_CAV_Amount,d.dtl_ROID,d.BillDtlID,
+	h.ReceiveAmount,h.ReceivePayer
+		from SCM_HX07_Receive_CAV_dtl d left join SCM_HX07_Receive_CAVHead h on h.billid=d.billid 
+		where h.status>=30 and d.dtl_ROID in 
+		(
+		<foreach collection="list" item="obj" index="index" separator=",">
+            #{obj}
+	   </foreach>
+		)
+		 order by h.billid desc
+  </select>
+  
+  
+    <select id="selectBillidBySerialNo" resultMap="BaseResultMap1" parameterType="java.lang.String" >
+  	select billid from scm_HX07_Receive_CAVHead where status>0 and SerialNo=#{SerialNo}
+  </select>
+  
+  <insert id="insert" parameterType="com.hxsb.model.BUY_ERP_GET_PAYMENT_RECORD.SCM_HX07_Receive_CAVHead" >
+    insert into scm_HX07_Receive_CAVHead (BillID, No, Status, Maker,Mender,
+    Checker,MakeDate,BillDate,EditDate,CheckDateTime,
+    BillDescr,CorpID,ReceiveBank,ReceiveAcount,SerialNo,
+    ReceiveAmount,PayWay,MemberID,MemberName,MemberTel,
+    ReceiveDate,PayTime,Biz_Unit,Biz_Area,Biz_Shop,
+    Biz_Company,NOTE,OnlineOrderType,OnlineOrderNo)
+    values (SEQ_CSS_MASTER.NEXTVAL, #{no,jdbcType=VARCHAR}, #{status,jdbcType=DECIMAL}, #{maker,jdbcType=DECIMAL}, #{mender,jdbcType=DECIMAL},
+    #{checker,jdbcType=DECIMAL}, #{makedate}, #{billdate}, #{editdate}, #{checkdatetime},
+    #{billdescr,jdbcType=VARCHAR}, #{corpid,jdbcType=DECIMAL}, #{receivebank,jdbcType=VARCHAR}, #{receiveacount,jdbcType=VARCHAR}, #{serialno,jdbcType=VARCHAR},
+    #{receiveamount,jdbcType=DECIMAL}, #{payway,jdbcType=DECIMAL}, #{memberid,jdbcType=VARCHAR}, #{membername,jdbcType=VARCHAR}, #{membertel,jdbcType=VARCHAR},
+    #{receivedate}, #{paytime}, #{bizUnit,jdbcType=DECIMAL}, #{bizArea,jdbcType=DECIMAL}, #{bizShop,jdbcType=DECIMAL},
+    #{bizCompany,jdbcType=DECIMAL}, #{note,jdbcType=VARCHAR},#{onlineOrderType,jdbcType=VARCHAR},#{onlineOrderNo,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  
+    <select id="selectMaxBillId" resultType="java.lang.Long" >
+  	 select max(BillID) from scm_HX07_Receive_CAVHead
+  </select>
+  
+  <select id="selectMaxNo" resultType="java.lang.String" >
+  	 select max(NO) from scm_HX07_Receive_CAVHead
+  	 where no like 'RC%'
+  </select> 
+  
+  <select id="selectDataByTime" resultMap="BaseResultMap2" parameterType="java.lang.String" >
+  	select h.* from SCM_HX07_Receive_CAVHead h where  billdate=to_date(#{time},'yyyy-mm-dd') and h.payway not in (40) order by h.billid desc
+  </select>
+</mapper>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.BUY_ERP_ORDER_CREATE.SCM_HX50_IntentionListHead_Dao">
+  <resultMap id="BaseResultMap" type="com.hxsb.model.BUY_ERP_ORDER_CREATE.SCM_HX50_IntentionListHead">
+    <result column="BILLID"   property="billid" />
+    <result column="BILLTYPE"   property="billtype" />
+    <result column="SEQUENCE"   property="sequence" />
+    <result column="MONTH"   property="month" />
+    <result column="NO"   property="no" />
+    <result column="BILLDATE"   property="billdate" />
+    <result column="STATUS"   property="status" />
+    <result column="CORPID"   property="corpid" />
+    <result column="MILEAGES"   property="mileages" />
+    <result column="TRANSFEE"   property="transfee" />
+    <result column="MAKER"   property="maker" />
+    <result column="MENDER"   property="mender" />
+    <result column="CHECKER"   property="checker" />
+    <result column="MAKEDATE"   property="makedate" />
+    <result column="EDITDATE"   property="editdate" />
+    <result column="CHECKDATETIME"   property="checkdatetime" />
+    <result column="SRC"   property="src" />
+    <result column="BIZ_UNIT"   property="bizUnit" />
+    <result column="BIZ_AREA"   property="bizArea" />
+    <result column="BIZ_SHOP"   property="bizShop" />
+    <result column="ORDERSRC"   property="ordersrc" />
+    <result column="BILLDESCR"   property="billdescr" />
+    <result column="RECEIPTSNUMBER"   property="receiptsnumber" />
+    <result column="SALESMANNUMBER"   property="salesmannumber" />
+    <result column="AGENTNAME"   property="agentname" />
+    <result column="AGENTMOBILE"   property="agentmobile" />
+    <result column="TOTALAMOUNT"   property="totalamount" />
+    <result column="AFFIRMTIME"   property="affirmtime" />
+    <result column="DELIVERYPROVINCE"   property="deliveryprovince" />
+    <result column="DELIVERYCITY"   property="deliverycity" />
+    <result column="DELIVERYCOUNTY"   property="deliverycounty" />
+    <result column="DELIVERYADDRESS"   property="deliveryaddress" />
+    <result column="DELIVERYNAME"   property="deliveryname" />
+    <result column="DELIVERYMOBILE"   property="deliverymobile" />
+    <result column="INVOICETYPE"   property="invoicetype" />
+    <result column="INVOICETITLE"   property="invoicetitle" />
+    <result column="INVOICECOMPANYNAME"   property="invoicecompanyname" />
+    <result column="INVOICETAXPAYERCODE"   property="invoicetaxpayercode" />
+    <result column="INVOICEOPENINGBANK"   property="invoiceopeningbank" />
+    <result column="INVOICEADDRPHONENO"   property="invoiceaddrphoneno" />
+    <result column="INVOICEBANKACCOUNT"   property="invoicebankaccount" />
+    <result column="ROID"   property="roid" />
+    <result column="BUY_USER_ID"   property="buyUserId" />
+    <result column="STAFFID"   property="staffid" />
+    <result column="DELIVERY_WAY"   property="deliveryWay" />
+    <result column="NOTE"   property="note" />
+  </resultMap>
+  
+  	<resultMap id="BaseResultMap1" type="com.hxsb.model.BUY_ERP_ORDER_CREATE.IntentionTemporary">
+    <result column="Title"   property="Title" />
+    <result column="CREATOR"   property="Creator" />
+    <result column="OPERATORID"   property="OperatorID" />
+    <result column="BILLID"   property="BILLID" />
+    <result column="NO"   property="NO" />
+    <result column="BIZ_UNIT"   property="Biz_Unit" />
+    <result column="BIZ_AREA"   property="Biz_Area" />
+    <result column="BIZ_SHOP"   property="Biz_Shop" />
+  </resultMap>
+  
+  <select id="selectDataByReceiptsNumber" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  	 select billid from SCM_HX50_IntentionListHead where ReceiptsNumber=#{receiptsnumber} 
+  </select>
+  
+  <insert id="insert" parameterType="com.hxsb.model.BUY_ERP_ORDER_CREATE.SCM_HX50_IntentionListHead" >
+  <selectKey keyProperty="billid" resultType="java.lang.Long" order="BEFORE">
+    	SELECT SEQ_CSS_MASTER.NEXTVAL as billid  FROM DUAL
+  </selectKey>
+    insert into SCM_HX50_IntentionListHead (BillID, NO, BillDate, MakeDate,BillType,CorpID,Maker,
+    ReceiptsNumber,Biz_Unit,Biz_Shop,Biz_Area,SalesmanNumber,StaffID,AgentName,
+    AgentMobile,delivery_way,TotalAmount,AffirmTime,DeliveryProvince,DeliveryCity,
+    DeliveryCounty,DeliveryAddress,DeliveryName,DeliveryMobile,InvoiceType,InvoiceTitle,
+    InvoiceCompanyName,InvoiceTaxpayerCode,InvoiceOpeningBank,InvoiceAddrPhoneno,
+    InvoiceBankAccount,note,createTime,BillDescr,Status)
+    values (#{billid}, #{no,jdbcType=VARCHAR}, #{billdate},#{makedate}, #{billtype,jdbcType=DECIMAL}, #{corpid,jdbcType=DECIMAL}, #{maker,jdbcType=DECIMAL},  
+    #{receiptsnumber,jdbcType=VARCHAR}, #{bizUnit,jdbcType=DECIMAL}, #{bizShop,jdbcType=DECIMAL},#{bizArea,jdbcType=DECIMAL}, #{salesmannumber,jdbcType=VARCHAR},  #{staffid,jdbcType=DECIMAL}, #{agentname,jdbcType=VARCHAR}, 
+    #{agentmobile,jdbcType=VARCHAR}, #{deliveryWay,jdbcType=DECIMAL}, #{totalamount,jdbcType=DECIMAL},#{affirmtime}, #{deliveryprovince,jdbcType=VARCHAR}, #{deliverycity,jdbcType=VARCHAR},
+    #{deliverycounty,jdbcType=VARCHAR}, #{deliveryaddress,jdbcType=VARCHAR}, #{deliveryname,jdbcType=VARCHAR},#{deliverymobile,jdbcType=VARCHAR}, #{invoicetype,jdbcType=DECIMAL}, #{invoicetitle,jdbcType=DECIMAL},
+      #{invoicecompanyname,jdbcType=VARCHAR}, #{invoicetaxpayercode,jdbcType=VARCHAR},#{invoiceopeningbank,jdbcType=VARCHAR}, #{invoiceaddrphoneno,jdbcType=VARCHAR}, 
+     #{invoicebankaccount,jdbcType=VARCHAR},#{note,jdbcType=VARCHAR}, #{createTime},#{billdescr,jdbcType=VARCHAR}, #{status,jdbcType=DECIMAL}
+	)
+  </insert>
+  
+  <select id="selectDataByBillId" resultMap="BaseResultMap1" parameterType="java.lang.Long" >
+  	 select distinct * from (
+                SELECT '意向单'||h.ReceiptsNumber||' 生成的订单待办'  AS Title,
+           h.Maker as Creator,o.OptID as OperatorID,
+           H.BillID, h.No, h.Biz_Unit, h.Biz_Area, h.Biz_Shop
+    FROM SCM_HX50_IntentionListHead H 
+    left join SCM_HX03_ROHead d on h.billid=d.IntentionListID
+    left join  GP_Roles r on r.Biz_Shop_ID=H.Biz_Shop left join GP_OptRole o on r.id=o.roleId 
+    where Position_ID=469711 and  r.status in (0,1)
+   and h.status>=30 and d.IntentionListID is null 
+   union all
+   SELECT '意向单'||h.ReceiptsNumber||' 生成的订单待办'  AS Title,
+           h.Maker,h.Maker as OperatorID,
+           H.BillID, h.No, h.Biz_Unit, h.Biz_Area, h.Biz_Shop
+    FROM SCM_HX50_IntentionListHead H 
+    left join SCM_HX03_ROHead d on h.billid=d.IntentionListID
+    Where h.status>=30 and d.IntentionListID is null
+    ) where billid=#{billid}
+  </select>
+
+  
+  <select id="selectMaxNo" resultType="java.lang.String" >
+  	 select max(NO) from SCM_HX50_IntentionListHead
+  </select> 
+  
+   <select id="selectMaxBillId" resultType="java.lang.Long" >
+  	 select max(BillID) from SCM_HX50_IntentionListHead
+  </select>
+</mapper>

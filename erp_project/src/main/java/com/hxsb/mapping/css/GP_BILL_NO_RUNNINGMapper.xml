@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.css.GP_BILL_NO_RUNNING_Dao">
+  <resultMap id="BaseResultMap" type="com.hxsb.model.css.GP_BILL_NO_RUNNING">
+    <result column="ID"  property="id" />
+    <result column="BNR_BILL_TYPE_CODE"  property="bnrBillTypeCode" />
+    <result column="BNR_RESET_PATTERN"  property="bnrResetPattern" />
+    <result column="BNR_MAX_RUNNING_NUMBER"  property="bnrMaxRunningNumber" />
+  </resultMap>
+  
+  <select id="selectData" resultMap="BaseResultMap" parameterType="java.util.Map" >
+		SELECT BNR_MAX_RUNNING_NUMBER from GP_BILL_NO_RUNNING 
+		WHERE BNR_BILL_TYPE_CODE=#{sBillKey} AND BNR_RESET_PATTERN=#{sResetPattern}
+  </select>
+  
+  <select id="selectMaxNumber" resultType="java.lang.Integer" parameterType="java.util.Map" >
+		SELECT BNR_MAX_RUNNING_NUMBER from GP_BILL_NO_RUNNING 
+		WHERE BNR_BILL_TYPE_CODE=#{sBillKey} AND BNR_RESET_PATTERN=#{sResetPattern}
+  </select>
+  
+  
+  <!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateBySelective" parameterType="java.util.Map">
+		UPDATE GP_BILL_NO_RUNNING SET BNR_MAX_RUNNING_NUMBER=BNR_MAX_RUNNING_NUMBER+1 
+		WHERE BNR_BILL_TYPE_CODE=#{sBillKey} AND BNR_RESET_PATTERN=#{sResetPattern}
+	</update>
+	
+	<insert id="insert" parameterType="com.hxsb.model.css.GP_BILL_NO_RUNNING" >
+		 INSERT INTO GP_BILL_NO_RUNNING(ID,BNR_BILL_TYPE_CODE,BNR_RESET_PATTERN,BNR_MAX_RUNNING_NUMBER) 
+		 VALUES(SEQ_CSS_MASTER.NEXTVAL,#{bnrBillTypeCode},#{bnrResetPattern},#{bnrMaxRunningNumber})
+  </insert>
+  
+  
+  
+  <select id="selectData1" resultMap="BaseResultMap" parameterType="java.util.Map" >
+		SELECT BNR_MAX_RUNNING_NUMBER from GP_BILL_NO_RUNNING 
+		WHERE BNR_BILL_TYPE_CODE=#{sBillKey}
+  </select>
+  
+  <select id="selectMaxNumber1" resultType="java.lang.Integer" parameterType="java.util.Map" >
+		SELECT BNR_MAX_RUNNING_NUMBER from GP_BILL_NO_RUNNING 
+		WHERE BNR_BILL_TYPE_CODE=#{sBillKey} 
+  </select>
+  
+  <!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateBySelective1" parameterType="java.util.Map">
+		UPDATE GP_BILL_NO_RUNNING SET BNR_MAX_RUNNING_NUMBER=BNR_MAX_RUNNING_NUMBER+1 
+		WHERE BNR_BILL_TYPE_CODE=#{sBillKey} 
+	</update>
+</mapper>

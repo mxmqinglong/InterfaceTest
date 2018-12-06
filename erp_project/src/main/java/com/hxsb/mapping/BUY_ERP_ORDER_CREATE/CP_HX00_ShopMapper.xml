@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.BUY_ERP_ORDER_CREATE.CP_HX00_Shop_Dao">
+  <resultMap id="BaseResultMap" type="com.hxsb.model.BUY_ERP_ORDER_CREATE.CP_HX00_Shop">
+    <result column="id"   property="id" />
+    <result column="CODE"   property="code" />
+    <result column="NAME"   property="name" />
+    <result column="FOREIGNNAME"   property="foreignname" />
+    <result column="NODETYPE"   property="nodetype" />
+    <result column="CORPID"   property="corpid" />
+    <result column="STATUS"   property="status" />
+    <result column="CREATEBYID"   property="createbyid" />
+    <result column="CREATETIME"   property="createtime" />
+    <result column="UPDATEBYID"   property="updatebyid" />
+    <result column="UPDATETIME"   property="updatetime" />
+    <result column="NOTES"   property="notes" />
+    <result column="FOREIGNNOTES"   property="foreignnotes" />
+    <result column="LEVEL"   property="level" />
+    <result column="TLEFT"   property="tleft" />
+    <result column="TRIGHT"   property="tright" />
+    <result column="PARENTID"   property="parentid" />
+    <result column="BizAreaID"   property="bizareaid" />
+    <result column="DL_ADDR_TYPE"   property="dlAddrType" />
+    <result column="DL_ADDR_REFID"   property="dlAddrRefid" />
+    <result column="DL_ADDR_DIVID"   property="dlAddrDivid" />
+    <result column="DL_ADDR_TEXT"   property="dlAddrText" />
+    <result column="SHOPADDR"   property="shopaddr" />
+    <result column="ADDR_TYPE"   property="addrType" />
+    <result column="ADDR_REFID"   property="addrRefid" />
+    <result column="ADDR_DIVID"   property="addrDivid" />
+    <result column="ADDR_TEXT"   property="addrText" />
+    <result column="DEPTID"   property="deptid" />
+    <result column="RO_ID"   property="roId" />
+    <result column="COND"   property="cond" />
+    <result column="RO_LESSEE"   property="roLessee" />
+    <result column="RO_SHOPLEAD"   property="roShoplead" />
+    <result column="RO_ASSISTANT"   property="roAssistant" />
+    <result column="LT_LESSEE"   property="ltLessee" />
+    <result column="LT_SHOPLEAD"   property="ltShoplead" />
+    <result column="LT_ASSISTANT"   property="ltAssistant" />
+    <result column="LT_LESSEE_W"   property="ltLesseeW" />
+    <result column="LT_SHOPLEAD_W"   property="ltShopleadW" />
+    <result column="LT_ASSISTANT_W"   property="ltAssistantW" />
+    <result column="LT_LESSEE_D"   property="ltLesseeD" />
+    <result column="LT_SHOPLEAD_D"   property="ltShopleadD" />
+    <result column="LT_ASSISTANT_D"   property="ltAssistantD" />
+    <result column="ISPUBLICSHOP"   property="ispublicshop" />
+  </resultMap>
+  
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+     select  id,BizAreaID from CP_HX00_Shop  where code=#{code}
+  </select>
+</mapper>

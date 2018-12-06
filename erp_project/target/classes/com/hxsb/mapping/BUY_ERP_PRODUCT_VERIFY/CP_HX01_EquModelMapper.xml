@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.BUY_ERP_PRODUCT_VERIFY.CP_HX01_EquModel_Dao">
+  <resultMap id="BaseResultMap" type="com.hxsb.model.BUY_ERP_PRODUCT_VERIFY.CP_HX01_EquModel">
+    <result column="ID"  property="ID" />
+    <result column="CODE"  property="CODE" />
+    <result column="NAME"   property="NAME" />
+    <result column="EQUSPEC"   property="EQUSPEC" />
+    <result column="EQUSIZE"   property="EQUSIZE" />
+    <result column="WORKWEIGHT"   property="WORKWEIGHT" />
+    <result column="EQUSTAMDARD"   property="EQUSTAMDARD" />
+    <result column="POWERRESOURCES"   property="POWERRESOURCES" />
+    <result column="PARENTID"   property="PARENTID" />
+    <result column="NOTES"   property="NOTES" />
+    <result column="CORPID"   property="CORPID" />
+    <result column="STATUS"   property="STATUS" />
+    <result column="CREATEBYID"   property="CREATEBYID" />
+    <result column="CREATETIME"   property="CREATETIME" />
+    <result column="UPDATEBYID"   property="UPDATEBYID" />
+    <result column="UPDATETIME"   property="UPDATETIME" />
+    <result column="FOREIGNNOTES"   property="FOREIGNNOTES" />
+    <result column="NODETYPE"   property="NODETYPE" />
+    <result column="FOREIGNNAME"   property="FOREIGNNAME" />
+    <result column="CLASSLEVEL"   property="CLASSLEVEL" />
+    <result column="ISPRIMARY"   property="ISPRIMARY" />
+    <result column="EQULENGTH"   property="EQULENGTH" />
+    <result column="EQUWIDTH"   property="EQUWIDTH" />
+    <result column="EQUHEIGHT"   property="EQUHEIGHT" />
+    <result column="EQUSIZEUOM"   property="EQUSIZEUOM" />
+    <result column="TRANSPORTWEIGHT"   property="TRANSPORTWEIGHT" />
+    <result column="BIZUNIT"   property="BIZUNIT" />
+    <result column="MANUFACTURER"   property="MANUFACTURER" />
+    <result column="SAPPARTCLASS"   property="SAPPARTCLASS" />
+    <result column="MACHINENAME"   property="MACHINENAME" />
+    <result column="MACHINETYPE"   property="MACHINETYPE" />
+    <result column="MACHINEPOWER"   property="MACHINEPOWER" />
+    <result column="NETWEIGHT"   property="NETWEIGHT" />
+    <result column="MODELCODE"   property="MODELCODE" />
+    <result column="MAINIMG_FILEID"   property="MAINIMG_FILEID" />
+    <result column="ISCANUSE"   property="ISCANUSE" />
+    <result column="ASSETCLASS"   property="ASSETCLASS" />
+    <result column="MEAUNIT"   property="MEAUNIT" />
+    <result column="ACCTYPE"   property="ACCTYPE" />
+    <result column="TAXSERVICECODE"   property="TAXSERVICECODE" />
+    <result column="NUMVALUE"   property="NUMVALUE" />
+    <result column="LEVEL"   property="LEVEL" />
+    <result column="TLEFT"   property="TLEFT" />
+    <result column="TRIGHT"   property="TRIGHT" />
+    <result column="ROUTINENOTES"   property="ROUTINENOTES" />
+    <result column="ASSETPRICE"   property="ASSETPRICE" />
+  </resultMap>
+  <select id="selectData" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	select * from CP_HX01_EquModel m where code=#{product_erp_number}
+  </select>
+  
+  <select id="selectIdByCode" resultType="java.lang.Long" parameterType="java.lang.String" >
+	select id from CP_HX01_EquModel m where code=#{code}
+  </select>
+</mapper>

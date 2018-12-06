@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.BUY_ERP_ORDER_CREATE.SCM_HX50_IntentionList2_Dao">
+  <resultMap id="BaseResultMap" type="com.hxsb.model.BUY_ERP_ORDER_CREATE.SCM_HX50_IntentionList2">
+    <result column="BILLDTLID"   property="billdtlid" />
+    <result column="BILLID"   property="billid" />
+    <result column="DTL_BUSSTYPE"   property="dtlBusstype" />
+    <result column="DTL_PRODUCTNUMBER"   property="dtlProductnumber" />
+    <result column="DTL_ENTERTIME"   property="dtlEntertime" />
+    <result column="DTL_TENANCY"   property="dtlTenancy" />
+    <result column="DTL_TENANCYUNIT"   property="dtlTenancyunit" />
+    <result column="DTL_LEASEPRICE"   property="dtlLeaseprice" />
+    <result column="DTL_QUANTITY"   property="dtlQuantity" />
+  </resultMap>
+  
+  <select id="selectDetailByBillID" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  	 select * from SCM_HX50_IntentionList2 where billid=#{billid}
+  </select>
+  
+	<insert id="batchAdd" parameterType="java.util.ArrayList">
+		insert into SCM_HX50_IntentionList2 (BillDtlID,BillID,
+		dtl_ProductNumber,dtl_EnterTime,dtl_Tenancy,dtl_TenancyUnit,dtl_LeasePrice,dtl_Quantity)
+    	values
+    	<foreach collection="list" item="obj" index="index" separator=",">
+			(#{obj.billdtlid,jdbcType=DECIMAL},#{obj.billid,jdbcType=DECIMAL},
+			#{obj.dtlProductnumber,jdbcType=VARCHAR},#{obj.dtlEntertime,jdbcType=DATE},#{obj.dtlTenancy,jdbcType=DECIMAL},#{obj.dtlTenancyunit,jdbcType=VARCHAR},#{obj.dtlLeaseprice,jdbcType=DECIMAL},#{obj.dtlQuantity,jdbcType=DECIMAL})
+		</foreach>
+	</insert>
+	
+	<insert id="insert" parameterType="com.hxsb.model.BUY_ERP_ORDER_CREATE.SCM_HX50_IntentionList2" >
+   	insert into SCM_HX50_IntentionList2 (BillDtlID,BillID,
+		dtl_ProductNumber,dtl_EnterTime,dtl_Tenancy,dtl_TenancyUnit,dtl_LeasePrice,dtl_Quantity)
+    	values
+			(SEQ_CSS_MASTER.NEXTVAL,#{billid},
+			#{dtlProductnumber},#{dtlEntertime},#{dtlTenancy},#{dtlTenancyunit},#{dtlLeaseprice},#{dtlQuantity})
+  </insert>
+	
+   <select id="selectMaxBilldtlid" resultType="java.lang.Long" >
+  	 select max(BILLDTLID) from SCM_HX50_IntentionList2
+  </select>
+</mapper>

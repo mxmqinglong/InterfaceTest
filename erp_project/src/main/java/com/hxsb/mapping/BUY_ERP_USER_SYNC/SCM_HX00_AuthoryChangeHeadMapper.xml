@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.BUY_ERP_USER_SYNC.SCM_HX00_AuthoryChangeHead_Dao">
+  <resultMap id="BaseResultMap" type="com.hxsb.model.BUY_ERP_USER_SYNC.SCM_HX00_AuthoryChangeHead">
+    <result column="BILLID" jdbcType="DECIMAL" property="billid" />
+    <result column="BILLTYPE" jdbcType="DECIMAL" property="billtype" />
+    <result column="SEQUENCE" jdbcType="DECIMAL" property="sequence" />
+    <result column="MONTH" jdbcType="VARCHAR" property="month" />
+    <result column="NO" jdbcType="VARCHAR" property="no" />
+    <result column="BILLDATE" jdbcType="TIMESTAMP" property="billdate" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="NOWNAME" jdbcType="VARCHAR" property="nowname" />
+    <result column="NOWMOBILE" jdbcType="VARCHAR" property="nowmobile" />
+    <result column="MAKER" jdbcType="DECIMAL" property="maker" />
+    <result column="CHANGENAME" jdbcType="VARCHAR" property="changename" />
+    <result column="CHANGEMOBILE" jdbcType="VARCHAR" property="changemobile" />
+    <result column="BUY_USER_ID" jdbcType="DECIMAL" property="buyUserId" />
+    <result column="RELATENOS" jdbcType="VARCHAR" property="relatenos" />
+    <result column="CORPID" jdbcType="DECIMAL" property="corpid" />
+    <result column="ISAPP" jdbcType="DECIMAL" property="isapp" />
+    <result column="CHECKER" jdbcType="DECIMAL" property="checker" />
+    <result column="MAKEDATE" jdbcType="TIMESTAMP" property="makedate" />
+    <result column="MENDER" jdbcType="DECIMAL" property="mender" />
+    <result column="CHECKDATETIME" jdbcType="TIMESTAMP" property="checkdatetime" />
+    <result column="EDITDATE" jdbcType="TIMESTAMP" property="editdate" />
+    <result column="BILLDESCR" jdbcType="VARCHAR" property="billdescr" />
+    <result column="BIZ_AREA" jdbcType="DECIMAL" property="bizArea" />
+    <result column="ISDO" jdbcType="DECIMAL" property="isdo" />
+    <result column="BIZ_UNIT" jdbcType="DECIMAL" property="bizUnit" />
+    <result column="CHANGENOS" jdbcType="VARCHAR" property="changenos" />
+    <result column="CHANGEIDS" jdbcType="VARCHAR" property="changeids" />
+    <result column="BIZ_SHOP" jdbcType="DECIMAL" property="bizShop" />
+    <result column="RELATEIDS" jdbcType="VARCHAR" property="relateids" />
+  </resultMap>
+  
+ <insert id="insert" parameterType="com.hxsb.model.BUY_ERP_USER_SYNC.SCM_HX00_AuthoryChangeHead">
+ 	<selectKey keyProperty="billid" resultType="java.lang.Long" order="BEFORE">
+    	SELECT SEQ_CSS_MASTER.NEXTVAL as billid  FROM DUAL
+  	</selectKey>
+    insert into SCM_HX00_AUTHORYCHANGEHEAD (relateNos,relateIDs,buy_user_id,nowName,nowMobile,
+    changeName,changeMobile,Biz_Area,Biz_Shop,Maker,
+    Status,BillDate,Biz_Unit,BillID,No
+    )
+    values (#{relatenos},#{relateids},#{buyUserId},#{nowname},#{nowmobile},
+			#{changename},#{changemobile},#{bizArea},#{bizShop},#{maker},
+			#{status},#{billdate},#{bizUnit},#{billid},#{no}
+    )
+  </insert>
+</mapper>

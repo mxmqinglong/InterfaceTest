@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.css.CP_S00_BillNoRule_Dao">
+  <resultMap id="BaseResultMap" type="com.hxsb.model.css.CP_S00_BillNoRule">
+    <result column="REALCODE"   property="REALCODE" />
+    <result column="JudgeCond"   property="JudgeCond" />
+    <result column="dt_Pattern"   property="dt_Pattern" />
+    <result column="dt_PatternType"   property="dt_PatternType" />
+    <result column="dt_ResetNumber"   property="dt_ResetNumber" />
+  </resultMap>
+  
+  <select id="selectRules" resultMap="BaseResultMap" parameterType="java.lang.String" >
+		SELECT REALCODE,JudgeCond,dt_Pattern,dt_PatternType,dt_ResetNumber
+			 from CP_S00_BillNoRule h JOIN CP_S00_BillNoRule_dtl d ON h.ID=d.ID
+			 WHERE Status IN (0,1) AND REALCODE= #{strObjName} ORDER BY dt_Order
+  </select>
+</mapper>

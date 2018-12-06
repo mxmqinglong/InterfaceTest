@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.BUY_ERP_GET_REFUND_RECORD.SCM_HX07_Refundment2_Dao">
+  <!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateBySelective" parameterType="Object">
+		update SCM_HX07_Refundment2 set
+		<trim suffixOverrides=",">
+			<if test="dtlRefundstatus != null  and dtlRefundstatus != ''">
+				dtl_RefundStatus=#{dtlRefundstatus},
+			</if>
+			<if test="dtlRefundtime != null  and dtlRefundtime != ''">
+				dtl_RefundTime=#{dtlRefundtime},
+			</if>
+			<if test="dtlRefserialno != null  and dtlRefserialno != ''">
+				dtl_RefSerialNo=#{dtlRefserialno},
+			</if>
+		</trim>
+		where BillDtlID=#{billdtlid}
+	</update>
+	
+	<!-- 查询已经退款的数量 -->
+	<select id="selectRefundStatusCountByBillId" resultType="java.lang.Integer" parameterType="java.lang.Long" >
+	<!-- select * from SCM_HX07_RefundmentHead where billid=#{billid} -->
+		select count(BillDtlID) from SCM_HX07_Refundment2 
+			where billid=#{billid} and dtl_RefundStatus = 4
+  </select>
+</mapper>

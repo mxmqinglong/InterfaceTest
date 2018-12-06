@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxsb.dao.BUY_ERP_GET_REFUND_RECORD.SCM_HX07_Refundmenthead_Dao">
+  <resultMap id="BaseResultMap" type="com.hxsb.model.BUY_ERP_GET_REFUND_RECORD.RefundRecord">
+	<id column="BillID" property="erp_refund_record_id"/>
+    <result column="No"  property="erp_refund_record_number" />
+	<result column="ReceiveDate"  property="time" />
+	<result column="CustomerReceiveAcount"  property="name" />
+	
+	<!-- 记录明细   -->
+	<collection property="details" ofType="com.hxsb.model.BUY_ERP_GET_REFUND_RECORD.RefundRecordDetail">
+       	<result property="billid" column="BillID"/>
+       	<result column="BillDtlID"  property="erp_refund_record_details_id" />
+	    <result column="dtl_ROID"  property="erp_order_id" />
+		<result column="dtl_Amount"  property="amount" />
+     </collection>
+  </resultMap>
+  
+  
+  <resultMap id="BaseResultMap1" type="com.hxsb.model.BUY_ERP_GET_REFUND_RECORD.SCM_HX07_Refundmenthead">
+	<id column="BILLID" property="billid"/>
+	
+	<!-- 记录明细   -->
+	<collection property="details" ofType="com.hxsb.model.BUY_ERP_GET_REFUND_RECORD.SCM_HX07_Refundment2">
+       	<result column="BILLID" property="billid" />
+       	<result column="BillDtlID"  property="billdtlid" />
+	    <!-- <result column="dtl_RefundStatus"  property="dtlRefundstatus" /> -->
+		<result column="dtl_RefundTime"  property="dtlRefundtime" />
+		<result column="dtl_RefSerialNo"  property="dtlRefserialno" />
+     </collection>
+    
+  </resultMap>
+  
+  
+  <resultMap id="BaseResultMap2" type="com.hxsb.model.BUY_ERP_GET_REFUND_RECORD.RefundRecord2">
+		<result column="BillDtlID" property="record_details_id" />
+       	<result column="dtl_PaySerialNo"  property="payment_serial_number" />
+		<result column="dtl_RefSerialNo"  property="refund_serial_number" />
+		<result column="dtl_Amount"  property="refund_amount" />
+		<result column="dtl_RefundTime"  property="refund_time" />
+  </resultMap>
+  
+  
+  <resultMap id="BaseResultMap3" type="com.hxsb.model.BUY_ERP_GET_REFUND_RECORD.SMSTemplate">
+		<result column="Mobile" property="Mobile" />
+		<result column="amount"  property="Amount" />
+  </resultMap>
+  
+  
+  
+  
+  <select id="selectData" resultMap="BaseResultMap">
+	select distinct h.billid,   h.No,h.ReceiveDate,h.CustomerReceiveAcount,d.BillDtlID,d.dtl_ROID,d.dtl_Amount from SCM_HX07_Refundment2 d left join SCM_HX07_RefundmentHead h on h.billid=d.billid 
+		where h.status>=30 and d.dtl_ROID in 
+		 (
+		<foreach collection="list" item="obj" index="index" separator=",">
+            #{obj}
+	   </foreach>
+	   	)
+		 order by h.billid desc
+  </select>
+  
+  <select id="selectByBillId" resultMap="BaseResultMap1" parameterType="java.lang.Long" >
+			select h.BILLID,d.BILLID,d.BillDtlID,d.dtl_RefundStatus,d.dtl_RefundTime,d.dtl_RefSerialNo from  SCM_HX07_RefundmentHead h 
+			LEFT JOIN SCM_HX07_Refundment2 d on h.BILLID=d.BILLID
+			where h.BILLID=#{billid}
+  </select>
+  
+  
+  <!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateBySelective" parameterType="Object">
+		update SCM_HX07_RefundmentHead set
+		<trim suffixOverrides=",">
+			<if test="receiveacount != null  and receiveacount != ''">
+				ReceiveAcount=#{receiveacount},
+			</if>
+			<if test="receivedate != null ">
+				ReceiveDate=#{receivedate},
+			</if>
+		</trim>
+		where BILLID=#{billid}
+	</update>
+  
+  <select id="selectDataByTime" resultMap="BaseResultMap2" parameterType="java.lang.String" >
+  	select d.* from SCM_HX07_Refundment2 d left join SCM_HX07_RefundmentHead h on h.billid=d.billid where h.status>0 and to_char(d.dtl_RefundTime,'yyyy-mm-dd')=#{time}  order by d.billdtlid
+  </select>
+  
+  
+  <select id="selectSMSByBillId" resultMap="BaseResultMap3" parameterType="java.lang.Long" >
+		select cta.ContactMobile Mobile,sum(d.dtl_Amount) amount
+        from SCM_HX07_Refundment2 d
+        left join scm_hx03_rohead ro on ro.billid=d.dtl_ROID
+        left join (select distinct billid,ContactMobile from SCM_HX03_ROContactNew where contactType like '%1%' and ContactMobile is not null) cta on cta.billid=ro.billid
+        where d.billid=#{billid}
+        group by cta.ContactMobile
+  </select>
+</mapper>
